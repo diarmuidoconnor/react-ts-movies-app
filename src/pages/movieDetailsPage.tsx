@@ -42,7 +42,7 @@ const MoviePage = (props : { images: string[], movie : MovieT }) => {
                       key={image}
                       cols={1}
                     >
-                      <img
+                      <img alt={" "}
                         src={`https://image.tmdb.org/t/p/w500/${image}`}
                       />
                     </GridListTile>
