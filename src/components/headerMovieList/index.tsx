@@ -1,11 +1,11 @@
 
 import React from "react";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import makeStyles from '@mui/styles/makeStyles';
+import Paper from "@mui/material/Paper";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,18 +22,14 @@ const Header = (props : { title : string }) => {
   const title = props.title
   return (
     <Paper component="div" className={classes.root}>
-      <IconButton
-        aria-label="go back"
-      >
+      <IconButton aria-label="go back" size="large">
         <ArrowBackIcon color="primary" fontSize="large" />
       </IconButton>
 
       <Typography variant="h4" component="h3">
         {title}
       </Typography>
-      <IconButton
-        aria-label="go forward"
-      >
+      <IconButton aria-label="go forward" size="large">
         <ArrowForwardIcon color="primary" fontSize="large" />
       </IconButton>
     </Paper>

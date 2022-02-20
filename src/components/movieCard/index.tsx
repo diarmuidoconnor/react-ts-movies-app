@@ -1,17 +1,17 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardHeader from "@material-ui/core/CardHeader";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import CalendarIcon from "@material-ui/icons/CalendarTodayTwoTone";
-import StarRateIcon from "@material-ui/icons/StarRate";
-import IconButton from "@material-ui/core/IconButton";
-import Grid from "@material-ui/core/Grid";
+import makeStyles from '@mui/styles/makeStyles';
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import CardHeader from "@mui/material/CardHeader";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
+import StarRateIcon from "@mui/icons-material/StarRate";
+import IconButton from "@mui/material/IconButton";
+import Grid from "@mui/material/Grid";
 import { MovieT } from '../../index'
 
 const useStyles = makeStyles({
@@ -52,7 +52,7 @@ export default function MovieCard({ movie } : { movie : MovieT }) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton onClick={undefined}>
+        <IconButton onClick={undefined} size="large">
           <FavoriteIcon color="primary" fontSize="large" />
         </IconButton>
         <Button variant="outlined" size="medium" color="primary">

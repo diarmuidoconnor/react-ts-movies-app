@@ -1,6 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import MovieDetailsPage from './pages/movieDetailsPage'
+import { ThemeProvider, Theme, StyledEngineProvider, createTheme } from '@mui/material/styles';
+
+import makeStyles from '@mui/styles/makeStyles';
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
+
+const theme = createTheme();
 
 const images = [
   "/kOVEVeg59E0wsnXmF9nrh6OmWII.jpg",
@@ -8,25 +20,25 @@ const images = [
   "/2iGN0aKHJYD0xQydlfuCUAcgNbO.jpg",
   "/rjBwhsOzHKUw2NIOrE7aMqjfe6s.jpg",
 ]
- 
-export type MovieT = {
-  budget: number ;
-  genres: 
-    {
-      id: number;
-      name: string;
-    } [] ;
- 
-  homepage: string | undefined ;
-  id: number ;
-  imdb_id: string ;
-  original_language: "en",
-  overview: string ;
-  popularity: number ;
-  poster_path: string ;
-  } & { [k: string]: string | boolean | object | number }
 
-const sample : MovieT = {
+export type MovieT = {
+  budget: number;
+  genres:
+  {
+    id: number;
+    name: string;
+  }[];
+
+  homepage: string | undefined;
+  id: number;
+  imdb_id: string;
+  original_language: "en",
+  overview: string;
+  popularity: number;
+  poster_path: string;
+} & { [k: string]: string | boolean | object | number }
+
+const sample: MovieT = {
   adult: false,
   backdrop_path: "/5Iw7zQTHVRBOYpA0V6z0yypOPZh.jpg",
   belongs_to_collection: {
@@ -107,12 +119,17 @@ const sample : MovieT = {
   vote_count: 9692,
 };
 
-const movies : MovieT[] = [sample, sample, sample, sample, sample, sample, sample];
+const movies: MovieT[] = [sample, sample, sample, sample, sample, sample, sample];
 
 const App = () => {
   return (
-      <MovieDetailsPage movie={sample} images={images} />
-      );
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <MovieDetailsPage movie={sample} images={images} />
+
+      </ThemeProvider>
+    </StyledEngineProvider>
+  );
 };
 
 ReactDOM.render(<App />, document.getElementById("root"));

@@ -1,11 +1,11 @@
 import React from "react";
-import Chip from "@material-ui/core/Chip";
-import Paper from "@material-ui/core/Paper";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import MonetizationIcon from "@material-ui/icons/MonetizationOn";
-import StarRate from "@material-ui/icons/StarRate";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import Chip from "@mui/material/Chip";
+import Paper from "@mui/material/Paper";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import MonetizationIcon from "@mui/icons-material/MonetizationOn";
+import StarRate from "@mui/icons-material/StarRate";
+import Typography from "@mui/material/Typography";
+import makeStyles from '@mui/styles/makeStyles';
 import { MovieT } from '../../index'
 
 const useStyles = makeStyles((theme) => ({
