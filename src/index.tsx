@@ -35,7 +35,7 @@ export type MovieT = {
   original_language: "en",
   overview: string;
   popularity: number;
-  poster_path: string;
+  poster_path?: string;
 } & { [k: string]: string | boolean | object | number }
 
 const sample: MovieT = {

@@ -33,7 +33,6 @@ const MoviePage = (props : { images: string[], movie : MovieT }) => {
             <Grid item xs={3}>
               <div className={classes.gridListRoot}>
                 <ImageList
-                  cellHeight={500}
                   className={classes.gridList}
                   cols={1}
                 >
