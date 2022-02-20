@@ -2,10 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import MovieDetailsPage from './pages/movieDetailsPage'
 import { ThemeProvider, Theme, StyledEngineProvider, createTheme } from '@mui/material/styles';
-
-import makeStyles from '@mui/styles/makeStyles';
-
-
+import HomePage from './pages/homePage'
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends Theme {}
@@ -125,7 +122,7 @@ const App = () => {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <MovieDetailsPage movie={sample} images={images} />
+        <HomePage movies={movies} />
 
       </ThemeProvider>
     </StyledEngineProvider>
