@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect, ChangeEvent } from "react";
 import makeStyles from '@mui/styles/makeStyles';
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -9,7 +9,10 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { Genre } from '../../types'
+import { SelectChangeEvent } from "@mui/material";
 
+type FilterOption = 'genre' | 'title'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -18,20 +21,44 @@ const useStyles = makeStyles((theme) => ({
  
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 220,
+    minWidth: '100%',
     backgroundColor: "rgb(255, 255, 255)",
   },
 }));
 
 export default function FilterMoviesCard() {
   const classes = useStyles();
+  const [genres, setGenres] = useState<Genre[]>([{ id: '0', name: "All" }])
 
-  const genres = [
-    {id: 1, name: "Animation"},
-    {id: 2, name: "Comedy"},
-    {id: 3, name: "Thriller"}
-  ]
+  useEffect(() => {
+    fetch(
+      "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
+        process.env.REACT_APP_TMDB_KEY
+    )
+      .then(res => res.json())
+      .then(json => {
+        // console.log(json.genres) 
+        return json.genres
+      })
+      .then(apiGenres => {
+        setGenres([genres[0], ...apiGenres]);
+      });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  const handleChange = ( type : FilterOption, value : string ) => {
+    // Completed later
+  };
+
+  const handleTextChange = (e : ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    handleChange( "title", e.target.value)
+  }
+
+  const handleGenreChange = (e : SelectChangeEvent) : void => {
+    e.preventDefault()
+    handleChange( "genre", e.target.value)
+  };
   return (
     <>
     <Card className={classes.root} variant="outlined">
@@ -45,13 +72,17 @@ export default function FilterMoviesCard() {
           id="filled-search"
           label="Search field"
           type="search"
+          fullWidth={true}
           variant="filled"
+          onChange={handleTextChange }
         />
         <FormControl className={classes.formControl}>
           <InputLabel id="genre-label">Genre</InputLabel>
           <Select
             labelId="genre-label"
             id="genre-select"
+            defaultValue={'0'}
+            onChange={handleGenreChange}
           >
             {genres.map((genre) => {
               return (

@@ -13,6 +13,7 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import { MovieT } from '../../index'
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   card: { maxWidth: 345 },
@@ -55,9 +56,11 @@ export default function MovieCard({ movie } : { movie : MovieT }) {
         <IconButton onClick={undefined} size="large">
           <FavoriteIcon color="primary" fontSize="large" />
         </IconButton>
-        <Button variant="outlined" size="medium" color="primary">
-          More Info ...
-        </Button>
+        <Link to={`/movies/${movie.id}`}>
+          <Button variant="outlined" size="medium" color="primary">
+            More Info ...
+          </Button>
+        </Link>        
       </CardActions>
     </Card>
   );

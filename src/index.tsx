@@ -1,13 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import MovieDetailsPage from './pages/movieDetailsPage'
-import { ThemeProvider, Theme, StyledEngineProvider, createTheme } from '@mui/material/styles';
-import HomePage from './pages/homePage'
-declare module '@mui/styles/defaultTheme' {
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MoviePage from "./pages/movieDetailsPage";
+import HomePage from "./pages/homePage";
+
+import {
+  ThemeProvider,
+  Theme,
+  StyledEngineProvider,
+  createTheme,
+} from "@mui/material/styles";
+declare module "@mui/styles/defaultTheme" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends Theme {}
 }
-
 
 const theme = createTheme();
 
@@ -16,12 +22,11 @@ const images = [
   "/v1QQKq8M0fWxMgSdGOX1aCv8qMB.jpg",
   "/2iGN0aKHJYD0xQydlfuCUAcgNbO.jpg",
   "/rjBwhsOzHKUw2NIOrE7aMqjfe6s.jpg",
-]
+];
 
 export type MovieT = {
   budget: number;
-  genres:
-  {
+  genres: {
     id: number;
     name: string;
   }[];
@@ -29,11 +34,11 @@ export type MovieT = {
   homepage: string | undefined;
   id: number;
   imdb_id: string;
-  original_language: "en",
+  original_language: "en";
   overview: string;
   popularity: number;
   poster_path?: string;
-} & { [k: string]: string | boolean | object | number }
+} & { [k: string]: string | boolean | object | number };
 
 const sample: MovieT = {
   adult: false,
@@ -116,14 +121,26 @@ const sample: MovieT = {
   vote_count: 9692,
 };
 
-const movies: MovieT[] = [sample, sample, sample, sample, sample, sample, sample];
+const movies: MovieT[] = [
+  sample,
+  sample,
+  sample,
+  sample,
+  sample,
+  sample,
+  sample,
+];
 
 const App = () => {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <HomePage movies={movies} />
-
+        <BrowserRouter>
+          <Routes>
+            <Route path="/movies/:id" element={<MoviePage />} />
+            <Route path="/" element={<HomePage/>} />
+          </Routes>
+        </BrowserRouter>
       </ThemeProvider>
     </StyledEngineProvider>
   );
