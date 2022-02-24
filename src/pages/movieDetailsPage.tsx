@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import makeStyles from '@mui/styles/makeStyles';
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { MovieT } from '../index'
+import { MovieT } from '..//types'
 import {useParams} from  'react-router-dom'
 
 interface MovieImage {

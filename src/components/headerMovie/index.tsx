@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
-import { MovieT } from '../../index'
+import { MovieT } from '../..//types'
  
 const useStyles = makeStyles((theme) => ({
   root: {

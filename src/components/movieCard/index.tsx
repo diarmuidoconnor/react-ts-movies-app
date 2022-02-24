@@ -12,7 +12,7 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import { MovieT } from '../../index'
+import { MovieT } from '../..//types'
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({

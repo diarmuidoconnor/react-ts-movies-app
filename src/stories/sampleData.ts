@@ -1,4 +1,4 @@
-import { MovieT } from '../index'
+import { MovieT } from '../types'
 
 export default {
     adult: false,

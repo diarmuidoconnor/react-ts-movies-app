@@ -1,7 +1,7 @@
 import React from "react";
 import MovieCard from "../components/movieCard";
 import SampleMovie from "./sampleData";
-import { MovieT } from '../index'
+import { MovieT } from '../types'
 
 export default {
   title: "Home Page/MovieCard",

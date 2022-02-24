@@ -1,7 +1,7 @@
 import React from "react";
 import Movie from "../movieCard/";
 import Grid from "@mui/material/Grid";
-import { MovieT } from "../../index";
+import { MovieT } from "../../types";
 
 const MovieList = ({ movies }: { movies: MovieT[] }) => {
   let movieCards = movies.map((m) => (

@@ -3,7 +3,7 @@ import Header from "../components/headerMovieList";
 import Grid from "@mui/material/Grid";
 import makeStyles from '@mui/styles/makeStyles';
 import MovieList from "../components/movieList";
-import { MovieT } from '../index'
+import { MovieT } from '../types'
 
 const useStyles = makeStyles({
   root: {

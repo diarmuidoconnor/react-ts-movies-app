@@ -6,7 +6,7 @@ import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
 import makeStyles from '@mui/styles/makeStyles';
-import { MovieT } from '../../index'
+import { MovieT } from '../../types'
 
 const useStyles = makeStyles((theme) => ({
   chipRoot: {
