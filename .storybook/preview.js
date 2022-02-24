@@ -1,3 +1,5 @@
+import { muiTheme } from 'storybook-addon-material-ui5'
+import { MemoryRouter } from "react-router";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -8,3 +10,8 @@ export const parameters = {
     },
   },
 }
+
+export const decorators = [
+	muiTheme(),
+  (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
+];
