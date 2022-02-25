@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent} from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import makeStyles from '@mui/styles/makeStyles';
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieHeader = ({ movie } : { movie : MovieT }) => {
+const MovieHeader : FunctionComponent<{movie: MovieT}> = ({ movie } ) => {
   const classes = useStyles();
 
   return (

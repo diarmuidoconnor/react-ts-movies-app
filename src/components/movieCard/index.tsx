@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent} from "react";
 import makeStyles from '@mui/styles/makeStyles';
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MovieCard({ movie } : { movie : MovieT }) {
+const MovieCard : FunctionComponent<{ movie : MovieT }> = ({movie}) => {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
@@ -65,3 +65,5 @@ export default function MovieCard({ movie } : { movie : MovieT }) {
     </Card>
   );
 }
+
+export default MovieCard

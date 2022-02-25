@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -33,9 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieDetails = ( props : { movie : MovieT }) => {
+const MovieDetails : FunctionComponent<{movie : MovieT }> = ( { movie} ) => {
   const classes = useStyles();
-  const movie = props.movie
 
   return (
     <>

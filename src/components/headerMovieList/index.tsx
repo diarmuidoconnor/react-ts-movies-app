@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, {FunctionComponent} from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import makeStyles from '@mui/styles/makeStyles';
@@ -17,9 +17,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = (props : { title : string }) => {
+const Header : FunctionComponent<{title : string}> = ( { title }) => {
   const classes = useStyles();
-  const title = props.title
   return (
     <Paper component="div" className={classes.root}>
       <IconButton aria-label="go back" size="large">
