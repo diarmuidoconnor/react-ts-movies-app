@@ -1,11 +1,11 @@
 import React from "react";
 import MovieHeader from "../components/headerMovie";
-import SampleMovie from "./sampleData";
+import { sampleMovie} from "./sampleData";
 
 export default {
   title: "Movie Details Page/MovieHeader",
   component: MovieHeader,
 };
 
-export const Basic = () => <MovieHeader movie={SampleMovie} />;
+export const Basic = () => <MovieHeader movie={sampleMovie} />;
 Basic.storyName = "Default";

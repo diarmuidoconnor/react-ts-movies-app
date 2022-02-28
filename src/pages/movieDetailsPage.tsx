@@ -5,18 +5,9 @@ import Grid from "@mui/material/Grid";
 import makeStyles from '@mui/styles/makeStyles';
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { MovieT } from '..//types'
+import { MovieT , MovieImage} from '..//types'
 import {useParams} from  'react-router-dom'
 
-interface MovieImage {
-  aspect_ratio: number ;
-file_path: string ;
-height: number ;
-iso_639_1: string ;
-vote_average: number ;
-vote_count: number ;
-width: number ;
-}
 const useStyles = makeStyles((theme) => ({
   gridListRoot: {
     display: "flex",

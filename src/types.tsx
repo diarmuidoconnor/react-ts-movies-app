@@ -3,20 +3,41 @@ export interface Genre {
     name: string;
   }
 
-  export type MovieT = {
+  export interface MovieT {
+    title: string;
     budget: number;
     genres: {
       id: number;
       name: string;
     }[];
-  
     homepage: string | undefined;
     id: number;
     imdb_id: string;
     original_language: "en";
     overview: string;
+    release_date: string;
+    vote_average: number;
     popularity: number;
     poster_path?: string;
-  } & { [k: string]: string | boolean | object | number };
+    tagline: string;
+    runtime: number;
+    revenue: number;
+    vote_count: number;
+  } 
+  //& { [k: string]: string | boolean | object | number };
   
+export type ListedMovie = Omit<MovieT, 'genres'> & 
+    {genre_ids : number[] }
+  export interface MovieImage {
+    aspect_ratio: number ;
+  file_path: string ;
+  height: number ;
+  iso_639_1: string ;
+  vote_average: number ;
+  vote_count: number ;
+  width: number ;
+  }
+
+export type FilterOption = 'genre' | 'title' ;
+
   

@@ -1,6 +1,6 @@
 import React from "react";
 import MovieDetails from "../components/movieDetails";
-import SampleMovie from "./sampleData";
+import { sampleMovie } from "./sampleData";
 import { MovieT } from '../types'
 
 export default {
@@ -8,5 +8,5 @@ export default {
   component: MovieDetails,
 };
 
-export const Basic = () => <MovieDetails movie={SampleMovie} />;
+export const Basic = () => <MovieDetails movie={sampleMovie} />;
 Basic.storyName = "Default";

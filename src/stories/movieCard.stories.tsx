@@ -1,7 +1,7 @@
 import React from "react";
 import MovieCard from "../components/movieCard";
-import SampleMovie from "./sampleData";
-import { MovieT } from '../types'
+import { movieListInstance } from "./sampleData";
+import { MovieT , ListedMovie} from '../types'
 
 export default {
   title: "Home Page/MovieCard",
@@ -11,14 +11,14 @@ export default {
 export const Basic = () => {
   return (
     <MovieCard
-      movie={SampleMovie}
+      movie={movieListInstance}
     />
   );
 };
 Basic.storyName = "Default";
 
 export const Exceptional = () => {
-  let sampleNoPoster = { ...SampleMovie};
+  let sampleNoPoster = { ...movieListInstance};
   delete sampleNoPoster.poster_path;
   return (
     <MovieCard

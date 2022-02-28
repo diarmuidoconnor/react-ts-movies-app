@@ -9,6 +9,6 @@ export default {
 };
 
 export const Basic = () => {
-  return <FilterMoviesCard />;
+  return <FilterMoviesCard titleFilter="" genreFilter="" onUserInput={() => {}} />;
 };
 Basic.storyName = "Default";
