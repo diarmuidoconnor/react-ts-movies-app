@@ -80,6 +80,7 @@ const FilterMoviesCard: FunctionComponent<{
             className={classes.formControl}
             id="filled-search"
             label="Search field"
+            value={ titleFilter }
             type="search"
             fullWidth={true}
             variant="filled"
@@ -90,6 +91,7 @@ const FilterMoviesCard: FunctionComponent<{
             <Select
               labelId="genre-label"
               id="genre-select"
+              value={genreFilter }
               defaultValue={"0"}
               onChange={handleGenreChange}
             >
