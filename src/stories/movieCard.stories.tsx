@@ -12,6 +12,7 @@ export const Basic = () => {
   return (
     <MovieCard
       movie={movieListInstance}
+      selectFavourite={(id:number) => {}  }
     />
   );
 };
@@ -23,6 +24,7 @@ export const Exceptional = () => {
   return (
     <MovieCard
       movie={sampleNoPoster}
+      selectFavourite={(id:number) => {}  }
     />
   );
 };

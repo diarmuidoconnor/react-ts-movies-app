@@ -1,5 +1,5 @@
-import React, { FunctionComponent} from "react";
-import makeStyles from '@mui/styles/makeStyles';
+import React, { MouseEvent, FunctionComponent } from "react";
+import makeStyles from "@mui/styles/makeStyles";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -12,8 +12,9 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import { ListedMovie } from '../..//types'
+import { ListedMovie } from "../..//types";
 import { Link } from "react-router-dom";
+import { Avatar } from "@mui/material";
 
 const useStyles = makeStyles({
   card: { maxWidth: 345 },
@@ -23,11 +24,34 @@ const useStyles = makeStyles({
   },
 });
 
-const MovieCard : FunctionComponent<{ movie : ListedMovie }> = ({movie}) => {
+const MovieCard: FunctionComponent<{
+  movie: ListedMovie;
+  selectFavourite: (id: number) => void;
+}> = ({ movie, selectFavourite }) => {
   const classes = useStyles();
+
+  const handleAddToFavourite : (e : MouseEvent<HTMLElement>) => void = (e) => {
+    e.preventDefault();
+    selectFavourite(movie.id);
+  };
+
   return (
     <Card className={classes.card}>
-      <CardHeader title={movie.title} />
+      <CardHeader
+        // className={classes.header}
+        avatar={
+          movie.favourite ? (
+            <Avatar className={classes.avatar}>
+              <FavoriteIcon />
+            </Avatar>
+          ) : null
+        }
+        title={
+          <Typography variant="h5" component="p">
+            {movie.title}{" "}
+          </Typography>
+        }
+      />
       <CardMedia
         className={classes.media}
         image={
@@ -53,17 +77,21 @@ const MovieCard : FunctionComponent<{ movie : ListedMovie }> = ({movie}) => {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton onClick={undefined} size="large">
+        <IconButton
+          aria-label="add to favourites"
+          onClick={handleAddToFavourite}
+        >
           <FavoriteIcon color="primary" fontSize="large" />
         </IconButton>
+
         <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
           </Button>
-        </Link>        
+        </Link>
       </CardActions>
     </Card>
   );
-}
+};
 
-export default MovieCard
+export default MovieCard;

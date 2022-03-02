@@ -27,7 +27,9 @@ export interface Genre {
   //& { [k: string]: string | boolean | object | number };
   
 export type ListedMovie = Omit<MovieT, 'genres'> & 
-    {genre_ids : number[] }
+    {genre_ids : number[] ;
+    favourite?: boolean;
+    }
   export interface MovieImage {
     aspect_ratio: number ;
   file_path: string ;

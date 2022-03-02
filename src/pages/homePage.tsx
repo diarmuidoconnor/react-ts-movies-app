@@ -6,11 +6,11 @@ import Drawer from "@mui/material/Drawer";
 import makeStyles from "@mui/styles/makeStyles";
 import MovieList from "../components/movieList";
 import FilterCard from "../components/filterMoviesCard";
-import { MovieT, FilterOption, ListedMovie } from "../types";
+import { FilterOption, ListedMovie } from "../types";
 
 // import { EmojiTransportation } from "@mui/icons-material";
 
-const useStyles = makeStyles((theme) =>  ({
+const useStyles = makeStyles((theme) => ({
   root: {
     padding: "20px",
   },
@@ -31,6 +31,13 @@ const MovieListPage = () => {
 
   const genreId = Number(genreFilter);
 
+  const addToFavourites: (id: number) => void = (movieId) => {
+    const updatedMovies = movies.map((m) =>
+      m.id === movieId ? { ...m, favourite: true } : m
+    );
+    setMovies(updatedMovies);
+  };
+
   let displayedMovies = movies
     .filter((m) => {
       return m.title.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
@@ -43,7 +50,7 @@ const MovieListPage = () => {
     type,
     value
   ) => {
-    console.log(typeof genreId)
+    console.log(typeof genreId);
     if (type === "title") setTitleFilter(value);
     else setGenreFilter(value);
   };
@@ -70,7 +77,10 @@ const MovieListPage = () => {
           <Header title={"Discover Movies"} />
         </Grid>
         <Grid item container spacing={5}>
-          <MovieList movies={displayedMovies}></MovieList>
+          <MovieList
+            movies={displayedMovies}
+            selectFavourite={addToFavourites}
+          />
         </Grid>
       </Grid>
       <Fab
