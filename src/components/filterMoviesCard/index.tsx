@@ -1,6 +1,7 @@
 import React, {
   useState,
   useEffect,
+  useCallback,
   FunctionComponent,
   ChangeEvent,
 } from "react";
@@ -14,9 +15,10 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Genre } from "../../types";
+import { Genre, FilterOption } from "../../types";
 import { SelectChangeEvent } from "@mui/material";
-import { FilterOption } from "../../types";
+import { getGenres } from "../../api/tmdb-api";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -39,18 +41,9 @@ const FilterMoviesCard: FunctionComponent<{
   const [genres, setGenres] = useState<Genre[]>([{ id: "0", name: "All" }]);
 
   useEffect(() => {
-    fetch(
-      "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
-        process.env.REACT_APP_TMDB_KEY
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        // console.log(json.genres)
-        return json.genres;
-      })
-      .then((apiGenres) => {
-        setGenres([genres[0], ...apiGenres]);
-      });
+    getGenres().then((allGenres) => {
+      setGenres([genres[0], ...allGenres]);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -59,15 +52,15 @@ const FilterMoviesCard: FunctionComponent<{
     onUserInput(type, value); // NEW
   };
 
-  const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleTextChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     handleChange("title", e.target.value);
-  };
+  }, []);
 
-  const handleGenreChange = (e: SelectChangeEvent): void => {
+  const handleGenreChange = useCallback((e: SelectChangeEvent): void => {
     e.preventDefault();
     handleChange("genre", e.target.value);
-  };
+  }, []);
   return (
     <>
       <Card className={classes.root} variant="outlined">
@@ -80,7 +73,7 @@ const FilterMoviesCard: FunctionComponent<{
             className={classes.formControl}
             id="filled-search"
             label="Search field"
-            value={ titleFilter }
+            value={titleFilter}
             type="search"
             fullWidth={true}
             variant="filled"
@@ -91,7 +84,7 @@ const FilterMoviesCard: FunctionComponent<{
             <Select
               labelId="genre-label"
               id="genre-select"
-              value={genreFilter }
+              value={genreFilter}
               defaultValue={"0"}
               onChange={handleGenreChange}
             >
@@ -118,4 +111,4 @@ const FilterMoviesCard: FunctionComponent<{
   );
 };
 
-export default FilterMoviesCard
+export default FilterMoviesCard;

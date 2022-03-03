@@ -1,7 +1,21 @@
-import React, {FunctionComponent} from "react";
+import React, { FunctionComponent } from "react";
+import PageTemplate from "../components/templateMovieListPage";
+import { ListedMovie } from "../types";
 
-const FavouriteMoviesPage : FunctionComponent = () => {
-    return <h2>Favourite Movies</h2>
-}
+const FavouriteMoviesPage: FunctionComponent = () => {
+  const toDo = () => true;
+  // Get movies from local storage.
+  const movies: ListedMovie[] = JSON.parse(
+    localStorage.getItem("favourites") as string
+  );
 
-export default FavouriteMoviesPage
+  return (
+    <PageTemplate
+      title="Favourite Movies"
+      movies={movies}
+      selectFavourite={toDo}
+    />
+  );
+};
+
+export default FavouriteMoviesPage;
