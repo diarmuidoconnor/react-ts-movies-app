@@ -55,11 +55,13 @@ const FilterMoviesCard: FunctionComponent<{
   const handleTextChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     handleChange("title", e.target.value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleGenreChange = useCallback((e: SelectChangeEvent): void => {
     e.preventDefault();
     handleChange("genre", e.target.value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

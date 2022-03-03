@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useState, useCallback } from "react";
 import Header from "../headerMovieList";
 import FilterCard from "../filterMoviesCard";
 import Grid from "@mui/material/Grid";
@@ -40,10 +40,10 @@ const MovieListPageTemplate: FunctionComponent<{
       return genreId > 0 ? m.genre_ids.includes(genreId) : true;
     });
 
-  const handleChange = (type: FilterOption, value: string) => {
+  const handleChange = useCallback((type: FilterOption, value: string) => {
     if (type === "title") setTitleFilter(value);
     else setGenreFilter(value);
-  };
+  }, []);
 
   return (
     <>
