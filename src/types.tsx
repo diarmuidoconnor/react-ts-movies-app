@@ -56,3 +56,10 @@ export interface ReviewT {
   updated_at: string;
   url: string;
 }
+
+export interface ReviewLocationState {
+  
+    review: ReviewT;
+    movie: MovieT
+  
+}
