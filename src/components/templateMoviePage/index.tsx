@@ -8,6 +8,9 @@ import { getMovieImages } from "../../api/tmdb-api";
 import { MovieT, MovieImage } from "../../types";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    paddingTop: theme.spacing(7),
+  },
   gridListRoot: {
     display: "flex",
     flexWrap: "wrap",
@@ -33,7 +36,7 @@ const TemplateMoviePage: FunctionComponent<{
   }, []);
 
   return (
-    <>
+    <div className={classes.root}>
       <MovieHeader movie={movie} />
 
       <Grid container spacing={5} style={{ padding: "15px" }}>
@@ -56,7 +59,7 @@ const TemplateMoviePage: FunctionComponent<{
           {children}
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 };
 

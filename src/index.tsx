@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MoviePage from "./pages/movieDetailsPage";
 import HomePage from './pages/homePage'
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage";
 import MovieReviewPage from "./pages/movieReviewPage";
+import SiteHeader from './components/siteHeader'
 
 import {
   ThemeProvider,
@@ -24,14 +25,7 @@ const App = () => {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/movies/favourites">Favourites</Link>
-            </li>
-          </ul>
+          <SiteHeader />    
           <Routes>
             <Route path="/reviews/:id" element={<MovieReviewPage/>} />
             <Route

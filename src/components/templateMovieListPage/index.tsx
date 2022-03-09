@@ -10,7 +10,8 @@ import { FilterOption, ListedMovie } from "../../types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: "20px",
+    backgroundColor: "#bfbfbf",
+    paddingTop: theme.spacing(7),
   },
   fab: {
     marginTop: theme.spacing(8),
@@ -46,7 +47,7 @@ const MovieListPageTemplate: FunctionComponent<{
   }, []);
 
   return (
-    <>
+    <div className={classes.root}>
       <Grid container className={classes.root}>
         <Grid item xs={12}>
           <Header title={title} />
@@ -77,7 +78,7 @@ const MovieListPageTemplate: FunctionComponent<{
           genreFilter={genreFilter}
         />
       </Drawer>
-    </>
+    </div>
   );
 };
 export default MovieListPageTemplate;
