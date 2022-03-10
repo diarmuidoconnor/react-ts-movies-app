@@ -1,4 +1,4 @@
-import React, { MouseEvent, FunctionComponent } from "react";
+import React, { MouseEventHandler, FunctionComponent } from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -30,7 +30,7 @@ const MovieCard: FunctionComponent<{
 }> = ({ movie, selectFavourite }) => {
   const classes = useStyles();
 
-  const handleAddToFavourite : (e : MouseEvent<HTMLElement>) => void = (e) => {
+  const handleAddToFavourite : MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     selectFavourite(movie.id);
   };
@@ -79,6 +79,7 @@ const MovieCard: FunctionComponent<{
       <CardActions disableSpacing>
         <IconButton
           aria-label="add to favourites"
+          
           onClick={handleAddToFavourite}
         >
           <FavoriteIcon color="primary" fontSize="large" />
