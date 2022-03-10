@@ -15,7 +15,7 @@ const MovieListPage = () => {
     );
     setMovies(updatedMovies);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [movies]);
 
   useEffect(() => {
     getMovies().then((movies) => {
