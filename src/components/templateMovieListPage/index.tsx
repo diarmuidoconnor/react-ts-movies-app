@@ -1,23 +1,14 @@
-import React, { FunctionComponent, useState, useCallback } from "react";
+import React, { FunctionComponent } from "react";
 import Header from "../headerMovieList";
-import FilterCard from "../filterMoviesCard";
 import Grid from "@mui/material/Grid";
-import Fab from "@mui/material/Fab";
-import Drawer from "@mui/material/Drawer";
 import makeStyles from "@mui/styles/makeStyles";
 import MovieList from "../movieList";
-import { FilterOption, ListedMovie } from "../../types";
+import { ListedMovie } from "../../types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#bfbfbf",
     paddingTop: theme.spacing(7),
-  },
-  fab: {
-    marginTop: theme.spacing(8),
-    position: "fixed",
-    top: theme.spacing(2),
-    right: theme.spacing(2),
   },
 }));
 
@@ -27,24 +18,6 @@ const MovieListPageTemplate: FunctionComponent<{
   selectFavourite: (id: number) => void;
 }> = ({ movies, title, selectFavourite }) => {
   const classes = useStyles();
-  const [titleFilter, setTitleFilter] = useState("");
-  const [genreFilter, setGenreFilter] = useState("0");
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const genreId = Number(genreFilter);
-
-  let displayedMovies = movies
-    .filter((m) => {
-      return m.title.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
-    })
-    .filter((m) => {
-      return genreId > 0 ? m.genre_ids.includes(genreId) : true;
-    });
-
-  const handleChange = useCallback((type: FilterOption, value: string) => {
-    if (type === "title") setTitleFilter(value);
-    else setGenreFilter(value);
-  }, []);
 
   return (
     <div className={classes.root}>
@@ -55,29 +28,10 @@ const MovieListPageTemplate: FunctionComponent<{
         <Grid item container spacing={5}>
           <MovieList
             selectFavourite={selectFavourite}
-            movies={displayedMovies}
+            movies={movies}
           />
         </Grid>
       </Grid>
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() => setDrawerOpen(true)}
-        className={classes.fab}
-      >
-        Filter
-      </Fab>
-      <Drawer
-        anchor="left"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      >
-        <FilterCard
-          onUserInput={handleChange}
-          titleFilter={titleFilter}
-          genreFilter={genreFilter}
-        />
-      </Drawer>
     </div>
   );
 };

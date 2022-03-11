@@ -42,6 +42,14 @@ export interface MovieImage {
 
 export type FilterOption = "genre" | "title";
 
+export interface FilteringConfig<T> {
+  name : string;
+  value: string;
+  condition: FilterCondition<T>
+}
+
+export type FilterCondition<T> = (entity : T, value : string) => boolean; 
+export type FilterValue<T> = Omit<FilteringConfig<T>, 'condition' >;
 export interface ReviewT {
   author: string;
   author_details: {
