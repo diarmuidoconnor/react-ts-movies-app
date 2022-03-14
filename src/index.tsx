@@ -6,7 +6,8 @@ import HomePage from './pages/homePage'
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage";
 import MovieReviewPage from "./pages/movieReviewPage";
 import SiteHeader from './components/siteHeader'
-
+import { QueryClientProvider, QueryClient } from "react-query";
+import { ReactQueryDevtools } from 'react-query/devtools'
 import {
   ThemeProvider,
   Theme,
@@ -20,10 +21,21 @@ declare module "@mui/styles/defaultTheme" {
 
 const theme = createTheme();
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 360000,
+      refetchInterval: 360000, 
+      refetchOnWindowFocus: false
+    },
+  },
+});
+
 const App = () => {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <SiteHeader />    
           <Routes>
@@ -36,6 +48,8 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
           </Routes>
         </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
       </ThemeProvider>
     </StyledEngineProvider>
   );

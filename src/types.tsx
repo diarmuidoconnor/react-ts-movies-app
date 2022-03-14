@@ -71,3 +71,14 @@ export interface ReviewLocationState {
     movie: MovieT
   
 }
+
+export function assertIsListedMoviesArray(movies: any): asserts movies is ListedMovie[] {
+   if (! ('length' in movies))  {
+    throw new Error("Not an array");
+   }
+  (movies as Array<any>).forEach((m) => {
+    if (!("genre_ids" in m && "title" in m )) {
+      throw new Error("Not an array of movies");
+    }
+})
+}

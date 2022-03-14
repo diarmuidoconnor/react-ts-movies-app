@@ -1,6 +1,4 @@
 import React, {
-  useState,
-  useEffect,
   useCallback,
   FunctionComponent,
   ChangeEvent,
@@ -18,6 +16,8 @@ import Select from "@mui/material/Select";
 import { Genre, FilterOption } from "../../types";
 import { SelectChangeEvent } from "@mui/material";
 import { getGenres } from "../../api/tmdb-api";
+import { useQuery } from "react-query";
+import Spinner from '../spinner'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,19 +38,13 @@ const FilterMoviesCard: FunctionComponent<{
   onUserInput: (f: FilterOption, s: string) => void;
 }> = ({ titleFilter, genreFilter, onUserInput }) => {
   const classes = useStyles();
-  const [genres, setGenres] = useState<Genre[]>([{ id: "0", name: "All" }]);
+  const { data, error, status } = useQuery<Genre[], Error>("genres", getGenres);
 
-  useEffect(() => {
-    getGenres().then((allGenres) => {
-      setGenres([genres[0], ...allGenres]);
-    });
+  const handleGenreChange = useCallback((e: SelectChangeEvent): void => {
+    e.preventDefault();
+    handleChange("genre", e.target.value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleChange = (type: FilterOption, value: string) => {
-    // Completed later
-    onUserInput(type, value); // NEW
-  };
 
   const handleTextChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -58,11 +52,22 @@ const FilterMoviesCard: FunctionComponent<{
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleGenreChange = useCallback((e: SelectChangeEvent): void => {
-    e.preventDefault();
-    handleChange("genre", e.target.value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (status === 'loading') {
+    return <Spinner />;
+  }
+
+  if (status === "error") {
+    return <h1>{error?.message}</h1>;
+  }
+  const genres = data || [];
+
+  const handleChange = (type: FilterOption, value: string) => {
+    // Completed later
+    onUserInput(type, value); // NEW
+  };
+
+
+
   return (
     <>
       <Card className={classes.root} variant="outlined">

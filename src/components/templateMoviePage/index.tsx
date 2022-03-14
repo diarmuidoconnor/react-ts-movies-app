@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import MovieHeader from "../headerMovie";
 import Grid from "@mui/material/Grid";
 import makeStyles from "@mui/styles/makeStyles";
@@ -6,6 +6,8 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { getMovieImages } from "../../api/tmdb-api";
 import { MovieT, MovieImage } from "../../types";
+import { useQuery } from "react-query";
+import Spinner from '../spinner'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,14 +28,18 @@ const TemplateMoviePage: FunctionComponent<{
   movie: MovieT;
 }> = ({ movie, children }) => {
   const classes = useStyles();
-  const [images, setImages] = useState<MovieImage[]>([]);
+  const id = movie.id
+  const { data: images , error, status } = useQuery<MovieImage[], Error>(
+    ["images", id ],
+    () => getMovieImages(id)
+  );
+  if (status === 'loading') {
+    return <Spinner />;
+  }
 
-  useEffect(() => {
-    getMovieImages(movie.id).then((images) => {
-      setImages(images);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (status === 'error') {
+    return <h1>{error}</h1>;
+  }
 
   return (
     <div className={classes.root}>
@@ -43,14 +49,14 @@ const TemplateMoviePage: FunctionComponent<{
         <Grid item xs={3}>
           <div className={classes.gridListRoot}>
             <ImageList className={classes.gridList} cols={1}>
-              {images.map((image) => (
+              {images?.map((image) => (
                 <ImageListItem key={image.file_path} cols={1}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
                     alt={""}
                   />
                 </ImageListItem>
-              ))}
+              )) ?? {}}
             </ImageList>
           </div>
         </Grid>
