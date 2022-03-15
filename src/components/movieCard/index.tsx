@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, FunctionComponent } from "react";
+import React, { useContext, MouseEventHandler, FunctionComponent } from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -15,6 +15,7 @@ import Grid from "@mui/material/Grid";
 import { ListedMovie } from "../..//types";
 import { Link } from "react-router-dom";
 import { Avatar } from "@mui/material";
+import { FavouriteMoviesContext } from "../../context/favouriteMoviesContext"
 
 const useStyles = makeStyles({
   card: { maxWidth: 345 },
@@ -29,10 +30,17 @@ const MovieCard: FunctionComponent<{
   selectFavourite: (id: number) => void;
 }> = ({ movie, selectFavourite }) => {
   const classes = useStyles();
+  const {favourites, addFavourite } = useContext(FavouriteMoviesContext)
 
+  if (favourites.find((id) => id === movie.id)) {
+    movie.favourite = true;
+  } else {
+    movie.favourite = false
+  }
+    
   const handleAddToFavourite : MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    selectFavourite(movie.id);
+    addFavourite(movie);
   };
 
   return (
