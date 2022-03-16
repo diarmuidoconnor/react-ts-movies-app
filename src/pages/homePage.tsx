@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from "react";
+import React, { useCallback } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { ListedMovie, FilteringConfig, FilterOption } from "../types";
 import { getMovies } from "../api/tmdb-api";
@@ -21,7 +21,7 @@ const genreFiltering: FilteringConfig<ListedMovie> = {
   condition: genreFilter,
 };
 
-const MovieListPage: FunctionComponent = () => {
+const MovieListPage = () => {
   const { data, error, status } = useQuery<ListedMovie[], Error>(
     "discover",
     getMovies

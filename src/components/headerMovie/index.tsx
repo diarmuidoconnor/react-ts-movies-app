@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieHeader: FunctionComponent<{ movie: MovieT }> = ({ movie }) => {
+function MovieHeader<T extends MovieT > (  { movie } : { movie: T }) {
   const classes = useStyles();
   const navigate = useNavigate();
 

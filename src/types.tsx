@@ -23,6 +23,7 @@ export interface MovieT {
   runtime: number;
   revenue: number;
   vote_count: number;
+  favourite?: boolean;
 }
 //& { [k: string]: string | boolean | object | number };
 

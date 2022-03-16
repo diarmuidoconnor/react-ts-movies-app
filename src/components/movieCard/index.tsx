@@ -1,4 +1,4 @@
-import React, { useContext, MouseEventHandler, FunctionComponent } from "react";
+import React, { useContext, MouseEventHandler } from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -12,7 +12,7 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import { ListedMovie } from "../..//types";
+import { ListedMovie, MovieT } from "../..//types";
 import { Link } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { FavouriteMoviesContext } from "../../context/favouriteMoviesContext"
@@ -25,10 +25,10 @@ const useStyles = makeStyles({
   },
 });
 
-const MovieCard: FunctionComponent<{
-  movie: ListedMovie;
-  selectFavourite: (id: number) => void;
-}> = ({ movie, selectFavourite }) => {
+function MovieCard<T extends ListedMovie | MovieT>({ movie, selectFavourite } : {
+  movie: T,
+  selectFavourite: (id: number) => void
+} )  {
   const classes = useStyles();
   const {favourites, addFavourite } = useContext(FavouriteMoviesContext)
 

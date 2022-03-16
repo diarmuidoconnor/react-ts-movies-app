@@ -1,20 +1,29 @@
-import React, { useState, createContext, FunctionComponent } from "react";
+import React, {
+  useState,
+  ReactNode,
+  createContext,
+  FunctionComponent,
+} from "react";
 import { ListedMovie, MovieT } from "../types";
 
 export const FavouriteMoviesContext = createContext<{
   favourites: number[];
-  addFavourite: (m: ListedMovie) => void;
-  removeFavourite: (m: MovieT) => void;
+  addFavourite: (m: ListedMovie | MovieT) => void;
+  removeFavourite: (m: ListedMovie | MovieT) => void;
 }>({
   favourites: [],
-  addFavourite: () => {},
+  addFavourite: (m) => {},
   removeFavourite: () => {},
 });
 
-const FavouriteMoviesProvider : FunctionComponent = ( {children} ) => {
+function FavouriteMoviesProvider<T extends ListedMovie | MovieT>({
+  children
+}: {
+  children: ReactNode
+}) {
   const [favourites, setFavourites] = useState<number[]>([]);
 
-  const addToFavourites : (m: ListedMovie) => void = (movie) => {
+  const addToFavourites = function(movie : ListedMovie | MovieT) {
     let updatedFavourites = [...favourites];
     if (!favourites.includes(movie.id)) {
       updatedFavourites.push(movie.id);
@@ -23,7 +32,7 @@ const FavouriteMoviesProvider : FunctionComponent = ( {children} ) => {
   };
 
   // We will use this function in a later section
-  const removeFromFavourites = (movie : MovieT) => {
+  const removeFromFavourites = (movie: ListedMovie | MovieT ) => {
     setFavourites(favourites.filter((mId) => mId !== movie.id));
   };
 
@@ -38,6 +47,6 @@ const FavouriteMoviesProvider : FunctionComponent = ( {children} ) => {
       {children}
     </FavouriteMoviesContext.Provider>
   );
-};
+}
 
 export default FavouriteMoviesProvider;
