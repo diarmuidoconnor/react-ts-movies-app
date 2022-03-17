@@ -2,7 +2,6 @@ import React, {
   useState,
   ReactNode,
   createContext,
-  FunctionComponent,
 } from "react";
 import { ListedMovie, MovieT } from "../types";
 

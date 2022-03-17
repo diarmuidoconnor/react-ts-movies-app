@@ -20,13 +20,13 @@ const genreFiltering: FilteringConfig<ListedMovie> = {
   value: "0",
   condition: genreFilter,
 };
-
+ 
 const MovieListPage = () => {
   const { data, error, status } = useQuery<ListedMovie[], Error>(
     "discover",
     getMovies
   );
-  const { filterValues, setFilterValues, filterFunction } = useFiltering(
+  const { filterValues, setFilterValues, filterFunction } = useFiltering<ListedMovie>(
     [],
     [titleFiltering, genreFiltering]
   );

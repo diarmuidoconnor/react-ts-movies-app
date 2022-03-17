@@ -2,29 +2,33 @@ import React, { useContext, FunctionComponent } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, {
-  titleFilter,
-  genreFilter,
+  titleFilter
 } from "../components/movieFilterUI";
-import { ListedMovie, MovieT, FilteringConfig, FilterOption } from "../types";
+import { MovieT, FilteringConfig, FilterOption } from "../types";
 import { FavouriteMoviesContext } from "../context/favouriteMoviesContext"
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
- 
-const titleFiltering: FilteringConfig<ListedMovie> = {
+  
+const titleFiltering: FilteringConfig<MovieT> = {
   name: "title",
   value: "",
   condition: titleFilter,
 };
-const genreFiltering: FilteringConfig<ListedMovie> = {
+const genreFiltering: FilteringConfig<MovieT> = {
   name: "genre",
   value: "0",
-  condition: genreFilter,
+  condition: function (movie, value) {
+    const genreId = Number(value);
+    const genre_ids = movie.genres.map((g) => g.id);
+    return genreId > 0 ? genre_ids.includes(genreId) : true;
+  },
+  // condition: genreFilter,
 };
 
 const FavouriteMoviesPage: FunctionComponent = () => {
   const {favourites: movieIds } = useContext(FavouriteMoviesContext)
-  const { filterValues, setFilterValues, filterFunction } = useFiltering(
+  const { filterValues, setFilterValues, filterFunction } = useFiltering<MovieT>(
     [],
     [titleFiltering, genreFiltering]
   );
@@ -44,9 +48,9 @@ const FavouriteMoviesPage: FunctionComponent = () => {
   }
 
   const allFavourites = favouriteMovieQueries.map((q) => (q.data as MovieT));
-  // const displayMovies = allFavourites
-  //   ? filterFunction(allFavourites)
-  //   : [];
+  const displayMovies = allFavourites
+    ? filterFunction(allFavourites)
+    : [];
 
   const toDo = () => true;
   // Get movies from local storage.
@@ -69,7 +73,7 @@ const FavouriteMoviesPage: FunctionComponent = () => {
     <>
       <PageTemplate
         title="Favourite Movies"
-        movies={[]}
+        movies={displayMovies}
         selectFavourite={toDo}
       />
       <MovieFilterUI

@@ -3,9 +3,9 @@ import Fab from "@mui/material/Fab";
 import FilterCard from "../filterMoviesCard";
 import Drawer from "@mui/material/Drawer";
 import makeStyles from "@mui/styles/makeStyles";
-import { ListedMovie, FilterOption, FilterCondition } from "../../types";
+import { ListedMovie, MovieT, FilterOption, FilterCondition } from "../../types";
 
-export const titleFilter : FilterCondition<ListedMovie> = function (movie, value) {
+export const titleFilter : FilterCondition<ListedMovie | MovieT> = function (movie, value) {
   return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
 };
 

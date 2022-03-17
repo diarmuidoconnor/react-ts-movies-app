@@ -1,19 +1,20 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import {
   ListedMovie,
+  MovieT,
   FilteringConfig,
   FilterValue,
   FilterCondition,
 } from "../types";
 
-const useFiltering: (
-  d: ListedMovie[],
-  f: FilteringConfig<ListedMovie>[]
-) => {
-  filterValues: FilterValue<ListedMovie>[];
-  setFilterValues: Dispatch<SetStateAction<FilterValue<ListedMovie>[]>>;
-  filterFunction: (g: ListedMovie[]) => ListedMovie[];
-} = (data, filters) => {
+function useFiltering<T extends ListedMovie | MovieT> (data: T[], filters: FilteringConfig<T>[]) 
+
+ :
+  {
+    filterValues: FilterValue<T>[];
+    setFilterValues: Dispatch<SetStateAction<FilterValue<T>[]>>;
+    filterFunction: ( g: T[]) => T[];
+  } { 
   const [filterValues, setFilterValues] = useState<FilterValue<ListedMovie>[]>(
     () => {
       const filterInitialValues: FilterValue<ListedMovie>[] = filters.map(
@@ -26,10 +27,10 @@ const useFiltering: (
     }
   );
 
-  const filteringConditions: FilterCondition<ListedMovie>[] = filters.map(
+  const filteringConditions: FilterCondition<T>[] = filters.map(
     (f) => f.condition
   );
-  const filterFunction: (c: ListedMovie[]) => ListedMovie[] = (collection) =>
+  const filterFunction: (c: T[]) => T[] = (collection) =>
     filteringConditions.reduce((data, conditionFn, index) => {
       return data.filter((item) => {
         return conditionFn(item, filterValues[index].value);
