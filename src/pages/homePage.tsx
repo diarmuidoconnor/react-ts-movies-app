@@ -9,6 +9,7 @@ import MovieFilterUI, {
 } from "../components/movieFilterUI";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
+import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
 
 const titleFiltering: FilteringConfig<ListedMovie> = {
   name: "title",
@@ -52,17 +53,14 @@ const MovieListPage = () => {
   const movies = data || [];
   const displayedMovies = filterFunction(movies);
 
-  const favourites = movies.filter((m) => m.favourite);
-  localStorage.setItem("favourites", JSON.stringify(favourites));
-
-  const addToFavourites: (id: number) => boolean = (movieId) => true;
-
   return (
     <>
-      <PageTemplate
+      <PageTemplate<ListedMovie>
         title="Discover Movies"
         movies={displayedMovies}
-        selectFavourite={addToFavourites}
+        action={(movie) => {
+          return <AddToFavouritesIcon movie={movie} />
+        }}
       />
       <MovieFilterUI
         filterInputChange={changeFilterValues}

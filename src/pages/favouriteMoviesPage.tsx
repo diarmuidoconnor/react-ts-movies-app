@@ -9,7 +9,9 @@ import { FavouriteMoviesContext } from "../context/favouriteMoviesContext"
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
-  
+import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
+import WriteReview from "../components/cardIcons/writeReview";
+
 const titleFiltering: FilteringConfig<MovieT> = {
   name: "title",
   value: "",
@@ -74,7 +76,14 @@ const FavouriteMoviesPage: FunctionComponent = () => {
       <PageTemplate
         title="Favourite Movies"
         movies={displayMovies}
-        selectFavourite={toDo}
+        action={(movie) => {
+          return (
+            <>
+              <RemoveFromFavourites movie={movie} />
+              <WriteReview movie={movie} />
+            </>
+          );
+        }}
       />
       <MovieFilterUI
         filterInputChange={changeFilterValues}

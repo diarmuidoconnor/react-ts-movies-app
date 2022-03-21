@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import { ListedMovie, MovieT } from "../..//types";
 import { Link } from "react-router-dom";
@@ -25,9 +24,9 @@ const useStyles = makeStyles({
   },
 });
 
-function MovieCard<T extends ListedMovie | MovieT>({ movie, selectFavourite } : {
+function MovieCard<T extends ListedMovie | MovieT>({ movie, action } : {
   movie: T,
-  selectFavourite: (id: number) => void
+  action: (m: T) => React.ReactNode
 } )  {
   const classes = useStyles();
   const {favourites, addFavourite } = useContext(FavouriteMoviesContext)
@@ -38,11 +37,6 @@ function MovieCard<T extends ListedMovie | MovieT>({ movie, selectFavourite } : 
     movie.favourite = false
   }
     
-  const handleAddToFavourite : MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-    addFavourite(movie);
-  };
-
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -85,14 +79,7 @@ function MovieCard<T extends ListedMovie | MovieT>({ movie, selectFavourite } : 
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton
-          aria-label="add to favourites"
-          
-          onClick={handleAddToFavourite}
-        >
-          <FavoriteIcon color="primary" fontSize="large" />
-        </IconButton>
-
+      {action(movie)}
         <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...

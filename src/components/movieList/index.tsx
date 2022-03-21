@@ -5,14 +5,14 @@ import { ListedMovie, MovieT } from "../../types";
 
 function MovieList<T extends ListedMovie | MovieT>({
   movies,
-  selectFavourite,
+  action,
 }: {
   movies: T[];
-  selectFavourite: (id: number) => void;
+  action: (m: T) => React.ReactNode;
 }) {
   let movieCards = movies.map((m) => (
     <Grid key={m.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
-      <Movie key={m.id} movie={m} selectFavourite={selectFavourite} />
+      <Movie key={m.id} movie={m} action={action} />
     </Grid>
   ));
   return <>{movieCards}</>;

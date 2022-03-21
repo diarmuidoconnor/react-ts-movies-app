@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme) => ({
 function MovieListPageTemplate<T extends ListedMovie | MovieT>({
   movies,
   title,
-  selectFavourite,
+  action,
 }: {
   movies: T[];
   title: string;
-  selectFavourite: (id: number) => void;
+  action: (m: T) => React.ReactNode;
 }) {
   const classes = useStyles();
 
@@ -30,7 +30,7 @@ function MovieListPageTemplate<T extends ListedMovie | MovieT>({
           <Header title={title} />
         </Grid>
         <Grid item container spacing={5}>
-          <MovieList selectFavourite={selectFavourite} movies={movies} />
+          <MovieList action={action} movies={movies} />
         </Grid>
       </Grid>
     </div>
