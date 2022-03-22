@@ -1,4 +1,4 @@
-import React, { useContext, MouseEventHandler } from "react";
+import React, { useContext } from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -29,7 +29,7 @@ function MovieCard<T extends ListedMovie | MovieT>({ movie, action } : {
   action: (m: T) => React.ReactNode
 } )  {
   const classes = useStyles();
-  const {favourites, addFavourite } = useContext(FavouriteMoviesContext)
+  const {favourites } = useContext(FavouriteMoviesContext)
 
   if (favourites.find((id) => id === movie.id)) {
     movie.favourite = true;

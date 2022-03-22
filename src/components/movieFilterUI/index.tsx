@@ -3,13 +3,24 @@ import Fab from "@mui/material/Fab";
 import FilterCard from "../filterMoviesCard";
 import Drawer from "@mui/material/Drawer";
 import makeStyles from "@mui/styles/makeStyles";
-import { ListedMovie, MovieT, FilterOption, FilterCondition } from "../../types";
+import {
+  ListedMovie,
+  MovieT,
+  FilterOption,
+  FilterCondition,
+} from "../../types";
 
-export const titleFilter : FilterCondition<ListedMovie | MovieT> = function (movie, value) {
+export const titleFilter: FilterCondition<ListedMovie | MovieT> = function (
+  movie,
+  value
+) {
   return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
 };
 
-export const genreFilter : FilterCondition<ListedMovie> = function (movie, value) {
+export const genreFilter: FilterCondition<ListedMovie> = function (
+  movie,
+  value
+) {
   const genreId = Number(value);
   return genreId > 0 ? movie.genre_ids.includes(genreId) : true;
 };
@@ -26,10 +37,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieFilterUI : FunctionComponent<{
-    filterInputChange : (f: FilterOption, s: string) => void;
-    titleFilter : string,
-    genreFilter : string
+const MovieFilterUI: FunctionComponent<{
+  filterInputChange: (f: FilterOption, s: string) => void;
+  titleFilter: string;
+  genreFilter: string;
 }> = ({ filterInputChange, titleFilter, genreFilter }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);

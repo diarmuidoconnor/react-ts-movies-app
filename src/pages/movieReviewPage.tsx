@@ -7,8 +7,7 @@ import { ReviewLocationState} from '../types'
 const MovieReviewPage : FunctionComponent = () => {
   const location = useLocation()
   const { movie, review } = location.state as ReviewLocationState
-  console.log('hello')
-  console.log(location)
+
   return (
     <PageTemplate movie={movie}>
       <MovieReview review={review} />

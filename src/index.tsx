@@ -15,6 +15,8 @@ import {
   createTheme,
 } from "@mui/material/styles";
 import FavouriteMoviesProvider from "./context/favouriteMoviesContext";
+import AddMovieReviewPage from "./pages//addReviewPage";
+import MovieReviewsProvider from "./context/movieReviewsContext";
 
 declare module "@mui/styles/defaultTheme" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -41,15 +43,25 @@ const App = () => {
           <BrowserRouter>
             <SiteHeader />
             <FavouriteMoviesProvider>
-              <Routes>
-                <Route path="/reviews/:id" element={<MovieReviewPage />} />
-                <Route
-                  path="/movies/favourites"
-                  element={<FavouriteMoviesPage />}
-                />
-                <Route path="/movies/:id" element={<MoviePage />} />
-                <Route path="/" element={<HomePage />} />
-              </Routes>
+              <MovieReviewsProvider>
+                <Routes>
+                  <Route
+                    path="/reviews/form"
+                    element={<AddMovieReviewPage />}
+                  />
+                  <Route
+                    path="/movies/favourites"
+                    element={<FavouriteMoviesPage />}
+                  />
+                  <Route path="/reviews/:id" element={<MovieReviewPage />} />
+                  <Route
+                    path="/movies/favourites"
+                    element={<FavouriteMoviesPage />}
+                  />
+                  <Route path="/movies/:id" element={<MoviePage />} />
+                  <Route path="/" element={<HomePage />} />
+                </Routes>
+              </MovieReviewsProvider>
             </FavouriteMoviesProvider>
           </BrowserRouter>
           <ReactQueryDevtools initialIsOpen={false} />

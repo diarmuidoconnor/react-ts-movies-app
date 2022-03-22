@@ -54,13 +54,6 @@ const FavouriteMoviesPage: FunctionComponent = () => {
     ? filterFunction(allFavourites)
     : [];
 
-  const toDo = () => true;
-  // Get movies from local storage.
-  // const movies: ListedMovie[] = JSON.parse(
-  //   localStorage.getItem("favourites") as string
-  // );
-  // const displayedMovies = filterFunction(movies) 
-
   const changeFilterValues: (t: FilterOption, v: string) => void = (
     type,
     value

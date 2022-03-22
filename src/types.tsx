@@ -67,10 +67,18 @@ export interface ReviewT {
 }
 
 export interface ReviewLocationState {
-  
     review: ReviewT;
     movie: MovieT
-  
+}
+export interface ReviewCustom {
+  movieId: number;
+  author: string;
+  rating: number;
+  content: string
+}
+
+export interface AddReviewLocationState {
+  movieId: string;
 }
 
 export function assertIsListedMoviesArray(movies: any): asserts movies is ListedMovie[] {
