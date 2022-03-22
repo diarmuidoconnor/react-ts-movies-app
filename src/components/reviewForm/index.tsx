@@ -1,4 +1,4 @@
-import React, { useContext, useState, ChangeEventHandler, SyntheticEvent } from "react";
+import React, { useContext, useState, ChangeEventHandler } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";

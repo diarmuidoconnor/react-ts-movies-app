@@ -3,7 +3,7 @@ import React, {
     ReactNode,
     createContext,
   } from "react";
-  import { MovieT, ReviewCustom } from "../types";
+  import { ReviewCustom } from "../types";
   
   export const MovieReviewsContext = createContext<{
     reviews: ReviewCustom[];
@@ -13,7 +13,7 @@ import React, {
     addReview: (r) => {}
   });
   
-  function MovieReviewsProvider<T extends MovieT>({
+  function MovieReviewsProvider({
     children
   }: {
     children: ReactNode

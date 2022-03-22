@@ -15,7 +15,7 @@ export const FavouriteMoviesContext = createContext<{
   removeFavourite: () => {},
 });
 
-function FavouriteMoviesProvider<T extends ListedMovie | MovieT>({
+function FavouriteMoviesProvider({
   children
 }: {
   children: ReactNode
