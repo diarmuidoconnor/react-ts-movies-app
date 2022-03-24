@@ -8,7 +8,8 @@ import { ListedMovie, MovieT } from "../../types";
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#bfbfbf",
-    paddingTop: theme.spacing(7),
+    minHeight: "100vh",
+    paddingTop: theme.spacing(3),
   },
 }));
 

@@ -1,9 +1,9 @@
 import React from "react";
 import Movie from "../movieCard/";
 import Grid from "@mui/material/Grid";
-import { ListedMovie, MovieT } from "../../types";
+import { MovieModels } from "../../types";
 
-function MovieList<T extends ListedMovie | MovieT>({
+function MovieList<T extends MovieModels >({
   movies,
   action,
 }: {

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState }  from "react";
+import React, { useEffect, useState } from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,7 +10,7 @@ import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 import { getMovieReviews } from "../../api/tmdb-api";
 import { excerpt } from "../../util";
-import { MovieT, ReviewT } from '../..//types'
+import { MovieT, ReviewT } from "../..//types";
 
 const useStyles = makeStyles({
   table: {
@@ -18,11 +18,9 @@ const useStyles = makeStyles({
   },
 });
 
-const MovieReviews : FunctionComponent<{
-    movie : MovieT
-}> = ({ movie }) => {
+const MovieReviews = ({ movie }: { movie: MovieT }) => {
   const classes = useStyles();
-  const [reviews, setReviews] = useState<ReviewT[]> ([]);
+  const [reviews, setReviews] = useState<ReviewT[]>([]);
 
   useEffect(() => {
     getMovieReviews(movie.id).then((reviews) => {
@@ -36,7 +34,7 @@ const MovieReviews : FunctionComponent<{
       <Table className={classes.table} aria-label="reviews table">
         <TableHead>
           <TableRow>
-            <TableCell >Author</TableCell>
+            <TableCell>Author</TableCell>
             <TableCell align="center">Excerpt</TableCell>
             <TableCell align="right">More</TableCell>
           </TableRow>
@@ -47,14 +45,16 @@ const MovieReviews : FunctionComponent<{
               <TableCell component="th" scope="row">
                 {r.author}
               </TableCell>
-              <TableCell >{excerpt(r.content)}</TableCell>
-              <TableCell >
-                <Link to={`/reviews/${r.id}`} 
+              <TableCell>{excerpt(r.content)}</TableCell>
+              <TableCell>
+                <Link
+                  to={`/reviews/${r.id}`}
                   state={{
                     review: r,
                     movie: movie,
-                  }} >
-                {/* <Link
+                  }}
+                >
+                  {/* <Link
                   to={{
                     pathname: `/reviews/${r.id}`,
                     state: {
@@ -72,6 +72,6 @@ const MovieReviews : FunctionComponent<{
       </Table>
     </TableContainer>
   );
-}
+};
 
-export default MovieReviews
+export default MovieReviews;

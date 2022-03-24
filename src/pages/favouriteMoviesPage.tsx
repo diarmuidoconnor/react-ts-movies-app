@@ -2,7 +2,8 @@ import React, { useContext, FunctionComponent } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, {
-  titleFilter
+  titleFilter,
+  genreFilter
 } from "../components/movieFilterUI";
 import { MovieT, FilteringConfig, FilterOption } from "../types";
 import { FavouriteMoviesContext } from "../context/favouriteMoviesContext"
@@ -20,12 +21,7 @@ const titleFiltering: FilteringConfig<MovieT> = {
 const genreFiltering: FilteringConfig<MovieT> = {
   name: "genre",
   value: "0",
-  condition: function (movie, value) {
-    const genreId = Number(value);
-    const genre_ids = movie.genres.map((g) => g.id);
-    return genreId > 0 ? genre_ids.includes(genreId) : true;
-  },
-  // condition: genreFilter,
+  condition: genreFilter,
 };
 
 const FavouriteMoviesPage: FunctionComponent = () => {

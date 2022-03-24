@@ -11,7 +11,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
-import { ListedMovie, MovieT } from "../..//types";
+import { BaseMovie } from "../..//types";
 import { Link } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { FavouriteMoviesContext } from "../../context/favouriteMoviesContext"
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-function MovieCard<T extends ListedMovie | MovieT>({ movie, action } : {
+function MovieCard<T extends BaseMovie>({ movie, action } : {
   movie: T,
   action: (m: T) => React.ReactNode
 } )  {

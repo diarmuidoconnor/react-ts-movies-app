@@ -1,4 +1,9 @@
-import React, { useContext, useState, ChangeEventHandler } from "react";
+import React, {
+  useContext,
+  useState,
+  useCallback,
+  ChangeEventHandler,
+} from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -7,33 +12,11 @@ import Box from "@mui/material/Box";
 import { useForm } from "react-hook-form";
 import { MovieReviewsContext } from "../../context//movieReviewsContext";
 import MenuItem from "@mui/material/MenuItem";
-import {MovieT, ReviewCustom } from '../../types'
-import Snackbar from "@mui/material/Snackbar"; 
+import { MovieT, ReviewCustom } from "../../types";
+import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/lab/Alert";
-import { useNavigate } from 'react-router-dom'
-
-const ratings = [
-  {
-    value: 5,
-    label: "Excellent",
-  },
-  {
-    value: 4,
-    label: "Good",
-  },
-  {
-    value: 3,
-    label: "Average",
-  },
-  {
-    value: 2,
-    label: "Poor",
-  },
-  {
-    value: 0,
-    label: "Terrible",
-  },
-];
+import { useNavigate } from "react-router-dom";
+import { MovieRatings } from "../../types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,29 +45,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ReviewForm ({ movie } : { movie : MovieT}) {
+function ReviewForm({ movie }: { movie: MovieT }) {
   const classes = useStyles();
   const { register, handleSubmit, errors, reset } = useForm();
-  const { addReview} = useContext(MovieReviewsContext);
-  const [rating, setRating] = useState(3);
-  const [open, setOpen] = useState(false);  //NEW
-  const navigate = useNavigate()
+  const { addReview } = useContext(MovieReviewsContext);
+  const [rating, setRating] = useState<MovieRatings>(MovieRatings.Good);
+  const [open, setOpen] = useState(false); //NEW
+  const navigate = useNavigate();
 
-  const handleRatingChange : ChangeEventHandler<HTMLInputElement> = (event ) => {
+  const handleRatingChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setRating(Number(event.target.value));
   };
 
-  const onSubmit = (review : ReviewCustom) => {
+  const onSubmit = (review: ReviewCustom) => {
     review.movieId = movie.id;
     review.rating = rating;
-    addReview(review)
-    setOpen(true);   // NEW
+    addReview(review);
+    console.log(review);
+    setOpen(true); // NEW
   };
 
-  const handleSnackClose  = () => {     // NEW
-    setOpen(false);
-    navigate("/movies/favourites");
-  };
+  const handleSnackClose = useCallback(
+    () => {
+      // NEW
+      setOpen(false);
+      navigate("/movies/favourites");
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   return (
     <Box component="div" className={classes.root}>
@@ -158,11 +147,17 @@ function ReviewForm ({ movie } : { movie : MovieT}) {
           onChange={handleRatingChange}
           helperText="Don't forget your rating"
         >
-          {ratings.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
+          {Object.keys(MovieRatings)
+            .filter((v) => isNaN(Number(v)))
+            .map((option) => {
+              const key: keyof typeof MovieRatings =
+                option as keyof typeof MovieRatings;
+              return (
+                <MenuItem key={key} value={MovieRatings[key]}>
+                  {option}
+                </MenuItem>
+              );
+            })}
         </TextField>
 
         <Box>
@@ -192,6 +187,6 @@ function ReviewForm ({ movie } : { movie : MovieT}) {
       </form>
     </Box>
   );
-};
+}
 
 export default ReviewForm;

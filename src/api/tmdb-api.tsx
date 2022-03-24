@@ -3,8 +3,7 @@ import {
   MovieT,
   Genre,
   MovieImage,
-  ReviewT,
-  assertIsListedMoviesArray
+  ReviewT
 } from "../types";
 
 export const getMovies: () => Promise<ListedMovie[]> = () => {
@@ -19,7 +18,6 @@ export const getMovies: () => Promise<ListedMovie[]> = () => {
     })
     .then((json) => {
       const discoerMovies = json.results;
-      assertIsListedMoviesArray(discoerMovies);
       return discoerMovies;
     })
     .catch((error) => {

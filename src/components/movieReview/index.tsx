@@ -1,9 +1,7 @@
-import React, { FunctionComponent} from "react";
-import { ReviewT} from '../../types'
+import React from "react";
+import { ReviewT } from "../../types";
 
-const MovieReview: FunctionComponent<{
-    review : ReviewT
-}> =  ({ review }) => {
+const MovieReview = ({ review }: { review: ReviewT }) => {
   return (
     <>
       <p>Review By: {review.author} </p>
@@ -11,4 +9,4 @@ const MovieReview: FunctionComponent<{
     </>
   );
 };
-export default MovieReview
+export default MovieReview;

@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from "react";
+import React, { useState} from "react";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieDetails : FunctionComponent<{movie : MovieT }> = ( { movie} ) => {
+const MovieDetails = ( { movie} : {movie : MovieT }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false); // New
 

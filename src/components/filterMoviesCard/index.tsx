@@ -1,5 +1,4 @@
 import React, {
-  useCallback,
   FunctionComponent,
   ChangeEvent,
 } from "react";
@@ -40,23 +39,6 @@ const FilterMoviesCard: FunctionComponent<{
   const classes = useStyles();
   const { data, error, status } = useQuery<Genre[], Error>("genres", getGenres);
 
-  const handleChange = (type: FilterOption, value: string) => {
-    // Completed later
-    onUserInput(type, value); // NEW
-  };
-  
-  const handleGenreChange = useCallback((e: SelectChangeEvent): void => {
-    e.preventDefault();
-    handleChange("genre", e.target.value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const handleTextChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    handleChange("title", e.target.value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   if (status === 'loading') {
     return <Spinner />;
   }
@@ -68,8 +50,6 @@ const FilterMoviesCard: FunctionComponent<{
   if (genres[0].name !== "All") {
     genres.unshift({ id: "0", name: "All" });
   }
-
-
 
   return (
     <>
@@ -87,7 +67,7 @@ const FilterMoviesCard: FunctionComponent<{
             type="search"
             fullWidth={true}
             variant="filled"
-            onChange={handleTextChange}
+            onChange={(e : ChangeEvent<HTMLInputElement>) => onUserInput('title', e.target.value )}
           />
           <FormControl className={classes.formControl}>
             <InputLabel id="genre-label">Genre</InputLabel>
@@ -96,7 +76,7 @@ const FilterMoviesCard: FunctionComponent<{
               id="genre-select"
               value={genreFilter}
               defaultValue={"0"}
-              onChange={handleGenreChange}
+              onChange={(e: SelectChangeEvent) => onUserInput('genre', e.target.value  )}
             >
               {genres.map((genre) => {
                 return (

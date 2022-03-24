@@ -4,25 +4,26 @@ import FilterCard from "../filterMoviesCard";
 import Drawer from "@mui/material/Drawer";
 import makeStyles from "@mui/styles/makeStyles";
 import {
-  ListedMovie,
-  MovieT,
+  MovieModels,
+  BaseMovie,
+  isListedMovie,
   FilterOption,
   FilterCondition,
 } from "../../types";
 
-export const titleFilter: FilterCondition<ListedMovie | MovieT> = function (
-  movie,
-  value
-) {
+export const titleFilter: FilterCondition<BaseMovie> = function (movie, value) {
   return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
 };
 
-export const genreFilter: FilterCondition<ListedMovie> = function (
+export const genreFilter: FilterCondition<MovieModels> = function (
   movie,
   value
 ) {
   const genreId = Number(value);
-  return genreId > 0 ? movie.genre_ids.includes(genreId) : true;
+  let genres: number[];
+  if (isListedMovie(movie)) genres = movie.genre_ids;
+  else genres = movie.genres.map((g) => g.id);
+  return genreId > 0 ? genres.includes(genreId) : true;
 };
 
 const useStyles = makeStyles((theme) => ({

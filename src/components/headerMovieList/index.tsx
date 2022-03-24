@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import makeStyles from "@mui/styles/makeStyles";
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header: FunctionComponent<{ title: string }> = ({ title }) => {
+const Header = ({ title } : { title: string }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   return (

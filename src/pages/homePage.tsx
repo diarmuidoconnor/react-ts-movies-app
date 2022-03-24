@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { ListedMovie, FilteringConfig, FilterOption } from "../types";
 import { getMovies } from "../api/tmdb-api";
@@ -9,7 +9,7 @@ import MovieFilterUI, {
 } from "../components/movieFilterUI";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
+import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 
 const titleFiltering: FilteringConfig<ListedMovie> = {
   name: "title",
@@ -21,27 +21,25 @@ const genreFiltering: FilteringConfig<ListedMovie> = {
   value: "0",
   condition: genreFilter,
 };
- 
+
 const MovieListPage = () => {
   const { data, error, status } = useQuery<ListedMovie[], Error>(
     "discover",
     getMovies
   );
-  const { filterValues, setFilterValues, filterFunction } = useFiltering<ListedMovie>(
-    [],
-    [titleFiltering, genreFiltering]
-  );
+  const { filterValues, setFilterValues, filterFunction } =
+    useFiltering<ListedMovie>([], [titleFiltering, genreFiltering]);
 
-  const changeFilterValues: (t: FilterOption, v: string) => void = useCallback(
-    (type, value) => {
-      const newf = { name: type, value: value };
-      const newFilters =
-        type === "title" ? [newf, filterValues[1]] : [filterValues[0], newf];
-      setFilterValues(newFilters);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  const changeFilterValues: (t: FilterOption, v: string) => void = (
+    type,
+    value
+  ) => {
+    const newf = { name: type, value: value };
+    const newFilters =
+      type === "title" ? [newf, filterValues[1]] : [filterValues[0], newf];
+    setFilterValues(newFilters);
+  };
+
   if (status === "loading") {
     return <Spinner />;
   }
@@ -59,7 +57,7 @@ const MovieListPage = () => {
         title="Discover Movies"
         movies={displayedMovies}
         action={(movie) => {
-          return <AddToFavouritesIcon movie={movie} />
+          return <AddToFavouritesIcon movie={movie} />;
         }}
       />
       <MovieFilterUI

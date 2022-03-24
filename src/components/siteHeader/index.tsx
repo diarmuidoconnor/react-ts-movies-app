@@ -23,6 +23,12 @@ const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
 }));
 
+const menuOptions = [
+  { label: "Home", path: "/" },
+  { label: "Favorites", path: "/movies/favourites" },
+  { label: "Option 3", path: "/" },
+  { label: "Option 4", path: "/" },
+];
 const SiteHeader : FunctionComponent = () => {
   const classes = useStyles();
   const  navigate = useNavigate()
@@ -31,12 +37,6 @@ const SiteHeader : FunctionComponent = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const open = Boolean(anchorEl);
-  const menuOptions = [
-    { label: "Home", path: "/" },
-    { label: "Favorites", path: "/movies/favourites" },
-    { label: "Option 3", path: "/" },
-    { label: "Option 4", path: "/" },
-  ];
 
   const handleMenuSelect : (p : string) => void = (pageURL) => {
     navigate(pageURL);
