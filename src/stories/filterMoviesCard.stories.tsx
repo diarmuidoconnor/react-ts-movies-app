@@ -1,7 +1,7 @@
 
 import React from "react";
 import FilterMoviesCard from "../components/filterMoviesCard";
-import { MovieT } from '../types'
+import { MovieT, FilterValues, FilterOption } from '../types'
 
 export default {
   title: "Home Page/FilterMoviesCard",
@@ -9,6 +9,10 @@ export default {
 };
 
 export const Basic = () => {
-  return <FilterMoviesCard titleFilter="" genreFilter="" onUserInput={() => {}} />;
+  const filterValues : FilterValues<FilterOption> = {
+    'genre': '',
+    'title': ''
+  }
+  return <FilterMoviesCard filterValues={filterValues } onUserInput={() => {}} />;
 };
 Basic.storyName = "Default";

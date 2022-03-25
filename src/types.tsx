@@ -1,8 +1,3 @@
-export interface Genre {
-  id: string;
-  name: string;
-}
-
 export interface BaseMovie {
   title: string;
   budget: number;
@@ -42,6 +37,10 @@ export interface MovieImage {
   vote_count: number;
   width: number;
 }
+export interface Genre {
+  id: string;
+  name: string;
+}
 
 export enum MovieRatings {
   Excellent = 5,
@@ -51,17 +50,23 @@ export enum MovieRatings {
   Terrible = 1
 }
 
-export type FilterOption = Extract<keyof BaseMovie, "title"> | "genre";
-
+export type FilterOption = "title" | "genre";
 export interface FilteringConfig<T> {
-  name: FilterOption;
   value: string;
   condition: FilterCondition<T>;
 }
 
 export type FilterCondition<T> = (entity: T, value: string) => boolean;
 
-export type FilterValue<T> = Omit<FilteringConfig<T>, "condition">;
+export type FilterValues<A extends string> = {
+  [key in A] : string;
+}
+
+// Omit<FilteringConfig<T>, "condition">;
+
+export type Filters<Model,O extends string> = {
+  [K in O] : FilteringConfig<Model>
+}
 export interface ReviewT {
   author: string;
   author_details: {

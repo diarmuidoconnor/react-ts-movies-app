@@ -1,47 +1,47 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import {
-  ListedMovie,
-  MovieT,
-  FilteringConfig,
-  FilterValue,
+  Filters,
+  FilterValues,
+  MovieModels,
   FilterCondition,
 } from "../types";
 
-function useFiltering<T extends ListedMovie | MovieT> (data: T[], filters: FilteringConfig<T>[]) 
-
- :
-  {
-    filterValues: FilterValue<T>[];
-    setFilterValues: Dispatch<SetStateAction<FilterValue<T>[]>>;
-    filterFunction: ( g: T[]) => T[];
-  } { 
-  const [filterValues, setFilterValues] = useState<FilterValue<ListedMovie>[]>(
-    () => {
-      const filterInitialValues: FilterValue<ListedMovie>[] = filters.map(
-        (f) => ({
-          name: f.name,
-          value: f.value,
-        })
-      );
-      return filterInitialValues;
-    }
-  );
-
-  const filteringConditions: FilterCondition<T>[] = filters.map(
-    (f) => f.condition
-  );
-  const filterFunction: (c: T[]) => T[] = (collection) =>
-    filteringConditions.reduce((data, conditionFn, index) => {
+function useFiltering<T extends MovieModels, A extends string>(
+  data: T[],
+  filters: Filters<T, A>
+): {
+  filterValues: FilterValues<A>;
+  setFilterValues: Dispatch<SetStateAction<FilterValues<A>>>;
+  filterFunction: (g: T[]) => T[];
+} {
+  const [filterValues, setFilterValues] = useState<FilterValues<A>>(() => {
+    let filterInitialValues = {} as FilterValues<A>;
+    Object.keys(filters).forEach((k) => {
+      const key: A = k as A;
+      filterInitialValues[key] = filters[key].value;
+    });
+    return filterInitialValues;
+  });
+  let filteringConditions: FilterCondition<T>[] = [];
+  let rawfilterValues: string[] = [];
+  Object.keys(filters).forEach((k) => {
+    const key: A = k as A;
+    filteringConditions.push(filters[key].condition);
+    rawfilterValues.push(filterValues[key]);
+  });
+  const filterFunction: (c: T[]) => T[] = (collection) => {
+    return filteringConditions.reduce((data, conditionFn, index) => {
       return data.filter((item) => {
-        return conditionFn(item, filterValues[index].value);
+        return conditionFn(item, rawfilterValues[index]);
       });
     }, collection);
+  };
 
   return {
     filterValues,
     setFilterValues,
     filterFunction,
   };
-};
+}
 
 export default useFiltering;

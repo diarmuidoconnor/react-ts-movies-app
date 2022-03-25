@@ -12,7 +12,7 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Genre, FilterOption } from "../../types";
+import { Genre, FilterValues, FilterOption } from "../../types";
 import { SelectChangeEvent } from "@mui/material";
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
@@ -32,10 +32,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FilterMoviesCard: FunctionComponent<{
-  titleFilter: string;
-  genreFilter: string;
+  filterValues: FilterValues<FilterOption>,
   onUserInput: (f: FilterOption, s: string) => void;
-}> = ({ titleFilter, genreFilter, onUserInput }) => {
+}> = ({ filterValues, onUserInput }) => {
   const classes = useStyles();
   const { data, error, status } = useQuery<Genre[], Error>("genres", getGenres);
 
@@ -63,7 +62,7 @@ const FilterMoviesCard: FunctionComponent<{
             className={classes.formControl}
             id="filled-search"
             label="Search field"
-            value={titleFilter}
+            value={filterValues.title}
             type="search"
             fullWidth={true}
             variant="filled"
@@ -74,7 +73,7 @@ const FilterMoviesCard: FunctionComponent<{
             <Select
               labelId="genre-label"
               id="genre-select"
-              value={genreFilter}
+              value={filterValues.genre}
               defaultValue={"0"}
               onChange={(e: SelectChangeEvent) => onUserInput('genre', e.target.value  )}
             >

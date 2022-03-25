@@ -1,11 +1,10 @@
-import React, { useContext, FunctionComponent } from "react";
+import React, { SetStateAction, useContext, FunctionComponent } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, {
-  titleFilter,
-  genreFilter
+  movieFilters
 } from "../components/movieFilterUI";
-import { MovieT, FilteringConfig, FilterOption } from "../types";
+import { MovieT, FilterValues, FilterOption } from "../types";
 import { FavouriteMoviesContext } from "../context/favouriteMoviesContext"
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
@@ -13,22 +12,22 @@ import Spinner from "../components/spinner";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
 import WriteReview from "../components/cardIcons/writeReview";
 
-const titleFiltering: FilteringConfig<MovieT> = {
-  name: "title",
-  value: "",
-  condition: titleFilter,
-};
-const genreFiltering: FilteringConfig<MovieT> = {
-  name: "genre",
-  value: "0",
-  condition: genreFilter,
-};
+// const titleFiltering: FilteringConfig<MovieT> = {
+//   name: "title",
+//   value: "",
+//   condition: titleFilter,
+// };
+// const genreFiltering: FilteringConfig<MovieT> = {
+//   name: "genre",
+//   value: "0",
+//   condition: genreFilter,
+// };
 
 const FavouriteMoviesPage: FunctionComponent = () => {
   const {favourites: movieIds } = useContext(FavouriteMoviesContext)
-  const { filterValues, setFilterValues, filterFunction } = useFiltering<MovieT>(
+  const { filterValues, setFilterValues, filterFunction } = useFiltering<MovieT,FilterOption>(
     [],
-    [titleFiltering, genreFiltering]
+    movieFilters
   );
 
   const favouriteMovieQueries = useQueries<MovieT[]>(
@@ -54,12 +53,10 @@ const FavouriteMoviesPage: FunctionComponent = () => {
     type,
     value
   ) => {
-    const newf = { name: type, value: value };
-    const newFilters =
-      type === "title" ? [newf, filterValues[1]] : [filterValues[0], newf];
-    setFilterValues(newFilters);
+    let newfilterValues : SetStateAction<FilterValues<FilterOption>>  = { ...filterValues, [type]: value} ;
+    setFilterValues(newfilterValues );
   };
-
+  
   return (
     <>
       <PageTemplate
@@ -76,8 +73,7 @@ const FavouriteMoviesPage: FunctionComponent = () => {
       />
       <MovieFilterUI
         filterInputChange={changeFilterValues}
-        titleFilter={filterValues[0].value}
-        genreFilter={filterValues[1].value}
+        filterValues={filterValues}
       />
     </>
   );

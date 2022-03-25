@@ -1,43 +1,29 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import PageTemplate from "../components/templateMovieListPage";
-import { ListedMovie, FilteringConfig, FilterOption } from "../types";
+import { ListedMovie, FilterValues, FilterOption } from "../types";
 import { getMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, {
-  titleFilter,
-  genreFilter,
+  movieFilters
 } from "../components/movieFilterUI";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 
-const titleFiltering: FilteringConfig<ListedMovie> = {
-  name: "title",
-  value: "",
-  condition: titleFilter,
-};
-const genreFiltering: FilteringConfig<ListedMovie> = {
-  name: "genre",
-  value: "0",
-  condition: genreFilter,
-};
-
 const MovieListPage = () => {
   const { data, error, status } = useQuery<ListedMovie[], Error>(
     "discover",
     getMovies
-  );
+  ); 
   const { filterValues, setFilterValues, filterFunction } =
-    useFiltering<ListedMovie>([], [titleFiltering, genreFiltering]);
+    useFiltering<ListedMovie,FilterOption>([], movieFilters);
 
   const changeFilterValues: (t: FilterOption, v: string) => void = (
     type,
     value
   ) => {
-    const newf = { name: type, value: value };
-    const newFilters =
-      type === "title" ? [newf, filterValues[1]] : [filterValues[0], newf];
-    setFilterValues(newFilters);
+    let newfilterValues : SetStateAction<FilterValues<FilterOption>>  = { ...filterValues, [type]: value} ;
+    setFilterValues(newfilterValues );
   };
 
   if (status === "loading") {
@@ -62,8 +48,7 @@ const MovieListPage = () => {
       />
       <MovieFilterUI
         filterInputChange={changeFilterValues}
-        titleFilter={filterValues[0].value}
-        genreFilter={filterValues[1].value}
+        filterValues={filterValues}
       />
     </>
   );

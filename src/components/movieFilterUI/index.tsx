@@ -1,30 +1,49 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { useState } from "react";
 import Fab from "@mui/material/Fab";
 import FilterCard from "../filterMoviesCard";
 import Drawer from "@mui/material/Drawer";
 import makeStyles from "@mui/styles/makeStyles";
 import {
   MovieModels,
-  BaseMovie,
-  isListedMovie,
+  Filters,
   FilterOption,
-  FilterCondition,
+  FilterValues,
+  isListedMovie,
 } from "../../types";
 
-export const titleFilter: FilterCondition<BaseMovie> = function (movie, value) {
-  return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
+export const movieFilters: Filters<MovieModels,FilterOption> = {
+  title: {
+    value: "",
+    condition: (movie, value) => {
+      return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
+    },
+  },
+  genre: {
+    value: "0",
+    condition: (movie, value) => {
+      const genreId = Number(value);
+      let genres: number[];
+      if (isListedMovie(movie)) genres = movie.genre_ids;
+      else genres = movie.genres.map((g) => g.id);
+      return genreId > 0 ? genres.includes(genreId) : true;
+    },
+  }
 };
 
-export const genreFilter: FilterCondition<MovieModels> = function (
-  movie,
-  value
-) {
-  const genreId = Number(value);
-  let genres: number[];
-  if (isListedMovie(movie)) genres = movie.genre_ids;
-  else genres = movie.genres.map((g) => g.id);
-  return genreId > 0 ? genres.includes(genreId) : true;
-};
+// export const titleFilter: FilterCondition<BaseMovie> = function (movie, value) {
+//   return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
+// };
+
+// export const genreFilter: FilterCondition<MovieModels> = function (
+//   movie,
+//   value
+// ) {
+//   const genreId = Number(value);
+//   let genres: number[];
+//   if (isListedMovie(movie)) genres = movie.genre_ids;
+//   else genres = movie.genres.map((g) => g.id);
+//   return genreId > 0 ? genres.includes(genreId) : true;
+// };
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,11 +57,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieFilterUI: FunctionComponent<{
+const MovieFilterUI = ({
+  filterInputChange,
+  filterValues
+}: {
   filterInputChange: (f: FilterOption, s: string) => void;
-  titleFilter: string;
-  genreFilter: string;
-}> = ({ filterInputChange, titleFilter, genreFilter }) => {
+  filterValues : FilterValues<FilterOption>
+}) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -63,8 +84,7 @@ const MovieFilterUI: FunctionComponent<{
       >
         <FilterCard
           onUserInput={filterInputChange}
-          titleFilter={titleFilter}
-          genreFilter={genreFilter}
+          filterValues={filterValues}
         />
       </Drawer>
     </>
