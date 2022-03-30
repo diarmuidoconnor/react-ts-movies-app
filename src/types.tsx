@@ -47,26 +47,23 @@ export enum MovieRatings {
   Good = 4,
   Average = 3,
   Poor = 2,
-  Terrible = 1
+  Terrible = 1,
 }
 
 export type FilterOption = "title" | "genre";
 export interface FilteringConfig<T> {
   value: string;
-  condition: FilterCondition<T>;
+  condition: (entity: T, value: string) => boolean;
 }
-
-export type FilterCondition<T> = (entity: T, value: string) => boolean;
+// Lookup type
+export type FilterCondition<T> = FilteringConfig<T>["condition"];
 
 export type FilterValues<A extends string> = {
-  [key in A] : string;
-}
-
-// Omit<FilteringConfig<T>, "condition">;
-
-export type Filters<Model,O extends string> = {
-  [K in O] : FilteringConfig<Model>
-}
+  [key in A]: string;
+};
+export type Filters<Model, O extends string> = {
+  [K in O]: FilteringConfig<Model>;
+};
 export interface ReviewT {
   author: string;
   author_details: {
